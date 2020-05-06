@@ -11,7 +11,7 @@ class MyRunnable implements Runnable{
     //other methods and data for this class
 }
 
-class Main {
+class MyRunnableDemo {
     public static void main(String[] args) {
         MyRunnable myrun = new MyRunnable();
         Thread t1 = new Thread(myrun);
