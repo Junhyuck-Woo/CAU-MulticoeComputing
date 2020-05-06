@@ -9,7 +9,7 @@ import java.awt.desktop.SystemEventListener;
 class pc_static {
     // Given Variable
     private static final int NUM_END = 200000;
-    private static final int NUM_THREAD = 3;
+    private static final int NUM_THREAD = 1;
 
     // Main Method
     public static void main(String[] args) {
@@ -18,7 +18,6 @@ class pc_static {
     }
 }
 
-//
 class PrimeOperator {
     long total_time = 0;
     int num_thread = 0;
@@ -34,6 +33,8 @@ class PrimeOperator {
         Prime[] pn = new Prime[num_thread];
         int[] start_num = new int[num_thread];
         int[] end_num = new int[num_thread];
+        int prime_num = 0;
+        long total_time = 0;
 
         for (int i=0; i<num_thread; i++) {
             int gap = num_end / num_thread;
@@ -44,11 +45,38 @@ class PrimeOperator {
             }
         }
 
+        // Set timer
+        long startTime = System.currentTimeMillis();
+
+        // Run
         for (int i=0; i<num_thread; i++) {
             // Split the work
             pn[i] = new Prime(start_num[i], end_num[i]);
             pn[i].start();
         }
+
+        for (int i=0; i<num_thread; i++) {
+            try {
+                pn[i].join();
+            }
+            catch (InterruptedException e) {}
+        }
+
+        // Finish timer
+        long endTime = System.currentTimeMillis();
+        long runTime = endTime - startTime;
+
+        // Visualize the execution time of each thread
+        for (int i=0; i<num_thread; i++) {
+            prime_num += pn[i].getPrimeNum();
+            System.out.println(pn[i].getName() + ": " + pn[i].getRunTime() +"ms");
+        }
+
+        // Visualize the total execution time
+        System.out.println("Total Execution Time: "+ runTime +"ms");
+
+        // Visualize the total number of prime number
+        System.out.println("Total number of prime number: " + prime_num);
     }
 }
 
@@ -71,15 +99,15 @@ class Prime extends Thread {
             }
         }
         long endTime = System.currentTimeMillis();
-        long timeDiff = endTime - startTime;
-        System.out.println(getName() + " "+ timeDiff +"ms");
-        System.out.println(getName() + " "+ prime_num);
-        runTime = timeDiff;
+        runTime = endTime - startTime;
     }
 
-    public long result() {
-        //System.out.println(getName() + " "+ runTime +"ms");
+    public long getRunTime() {
         return runTime;
+    }
+
+    public long getPrimeNum() {
+        return prime_num;
     }
 
     public synchronized void count() {
