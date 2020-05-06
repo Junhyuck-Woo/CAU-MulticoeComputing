@@ -4,9 +4,9 @@
 // Title: AutoRunCurrent.java
 // Date: May6, 2020
 
-class AutoRun implements Runnable {
+class AutoRun_ implements Runnable {
     private Thread _me;
-    public AutoRun() {
+    public AutoRun_() {
         _me = new Thread(this);
         _me.start();
     }
@@ -19,7 +19,7 @@ class AutoRun implements Runnable {
 
 class Main {
     public static void main (String[] args) {
-        AutoRun t1 = new AutoRun(); // printout
+        AutoRun_ t1 = new AutoRun_(); // printout
         t1.run(); // no printout
         System.out.println("InsideMain()");
     }
