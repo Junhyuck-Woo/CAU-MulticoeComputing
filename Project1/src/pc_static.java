@@ -1,7 +1,6 @@
 // Writer: Junhyuck Woo
 // Lecture: Multicore Computing
-// Organization:
-//
+// Organization: Chung-Ang University
 // Deadline: May 10, 2020
 
 import java.awt.desktop.SystemEventListener;
@@ -19,16 +18,17 @@ class pc_static {
 }
 
 class PrimeOperator {
-    long total_time = 0;
+    // Variable for getting a number of thread and end of number
     int num_thread = 0;
     int num_end = 0;
 
+    // Constructor
     public PrimeOperator(final int NUM_END, final int NUM_THREAD) {
         num_end = NUM_END;
         num_thread = NUM_THREAD;
     }
 
-    // Variable
+    // Class runner
     public void run() {
         Prime[] pn = new Prime[num_thread];
         int[] start_num = new int[num_thread];
@@ -36,6 +36,7 @@ class PrimeOperator {
         int prime_num = 0;
         long total_time = 0;
 
+        // Split the number as same as
         for (int i=0; i<num_thread; i++) {
             int gap = num_end / num_thread;
             start_num[i] = gap * i;
@@ -86,34 +87,45 @@ class Prime extends Thread {
     private int start = 0;
     private int end = 0;
 
+    // Constructor
     public Prime(int start_num, int end_num) {
         start = start_num;
         end = end_num;
     }
 
+    // Runner
     public void run() {
+        // Set a timer
         long startTime = System.currentTimeMillis();
+        // Check the number is prime or not
         for (int i=start; i<end; i++) {
             if (isPrime(i)) {
                 count();
             }
         }
+        // Check the run time
         long endTime = System.currentTimeMillis();
         runTime = endTime - startTime;
     }
 
+    // Getter - runt time
     public long getRunTime() {
         return runTime;
     }
 
+    // Getter - Prime number
     public long getPrimeNum() {
         return prime_num;
     }
 
+    // Count the prime number with synchronization
     public synchronized void count() {
         prime_num++;
     }
 
+    // Check whether the number is prime
+    // If it is prime, then return True
+    // Else return false
     private boolean isPrime(int x) {
         int i;
         if (x<=1) {
