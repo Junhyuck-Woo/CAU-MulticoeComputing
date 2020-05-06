@@ -51,11 +51,11 @@ class PrimeOperator {
 
         // Run
         for (int i=0; i<num_thread; i++) {
-            // Split the work
             pn[i] = new Prime(start_num[i], end_num[i]);
             pn[i].start();
         }
 
+        // Wait the work is done
         for (int i=0; i<num_thread; i++) {
             try {
                 pn[i].join();
