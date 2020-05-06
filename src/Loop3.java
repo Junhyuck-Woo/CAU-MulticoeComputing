@@ -19,8 +19,8 @@ public class Loop3 extends Thread{
     }
     public static void main(String[] args) {
         Loop3 t1 = new Loop3("Thread 1");
-        Loop3 t2 = new Loop3("Thread 1");
-        Loop3 t3 = new Loop3("Thread 1");
+        Loop3 t2 = new Loop3("Thread 2");
+        Loop3 t3 = new Loop3("Thread 3");
         t1.start();
         t2.start();
         t3.start();
