@@ -142,4 +142,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Example directory idea
+Examples/.idea/*
+
 # End of https://www.gitignore.io/api/java,macos,intellij
