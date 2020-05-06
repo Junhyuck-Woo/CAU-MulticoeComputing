@@ -1,6 +1,7 @@
 // Lec: Multicore Computing
-// Writer: Junhyuck Woo
-// Deadline: May 10, 2020
+// Prof: Bong-soo Sohn
+// Org: College of Software, Chung-Ang University
+// Given code for project
 
 class pc_serial {
     private static final int NUM_END = 200000;
