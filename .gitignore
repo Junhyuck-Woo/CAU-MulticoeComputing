@@ -146,7 +146,7 @@ Temporary Items
 Examples/.idea/*
 Project1/.idea/*
 
-# imi
-Project1/*.imi
+# iml
+Project1/*.iml
 
 # End of https://www.gitignore.io/api/java,macos,intellij
