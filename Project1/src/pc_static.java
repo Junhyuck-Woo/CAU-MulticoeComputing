@@ -2,6 +2,8 @@
 // Lecture: Multicore Computing
 // Organization: Chung-Ang University
 // Deadline: May 10, 2020
+// Project #1
+//  - problem 1-1
 
 import java.awt.desktop.SystemEventListener;
 
@@ -12,25 +14,26 @@ class pc_static {
 
     // Main Method
     public static void main(String[] args) {
-        PrimeOperator po = new PrimeOperator(NUM_END, NUM_THREAD);
+        PrimeOperator1 po = new PrimeOperator1(NUM_END, NUM_THREAD);
         po.run();
     }
 }
 
-class PrimeOperator {
+class PrimeOperator1 {
     // Variable for getting a number of thread and end of number
     int num_thread = 0;
     int num_end = 0;
 
     // Constructor
-    public PrimeOperator(final int NUM_END, final int NUM_THREAD) {
+    public PrimeOperator1(final int NUM_END, final int NUM_THREAD) {
         num_end = NUM_END;
         num_thread = NUM_THREAD;
     }
 
     // Class runner
     public void run() {
-        Prime[] pn = new Prime[num_thread];
+        // Variables
+        Prime1[] pn = new Prime1[num_thread];
         int[] start_num = new int[num_thread];
         int[] end_num = new int[num_thread];
         int prime_num = 0;
@@ -51,7 +54,7 @@ class PrimeOperator {
 
         // Run
         for (int i=0; i<num_thread; i++) {
-            pn[i] = new Prime(start_num[i], end_num[i]);
+            pn[i] = new Prime1(start_num[i], end_num[i]);
             pn[i].start();
         }
 
@@ -59,6 +62,7 @@ class PrimeOperator {
         for (int i=0; i<num_thread; i++) {
             try {
                 pn[i].join();
+                prime_num += pn[i].getPrimeNum();
             }
             catch (InterruptedException e) {}
         }
@@ -69,7 +73,6 @@ class PrimeOperator {
 
         // Visualize the execution time of each thread
         for (int i=0; i<num_thread; i++) {
-            prime_num += pn[i].getPrimeNum();
             System.out.println(pn[i].getName() + ": " + pn[i].getRunTime() +"ms");
         }
 
@@ -81,14 +84,15 @@ class PrimeOperator {
     }
 }
 
-class Prime extends Thread {
+class Prime1 extends Thread {
+    // Variables
     private long runTime = 0;
     private int prime_num = 0;
     private int start = 0;
     private int end = 0;
 
     // Constructor
-    public Prime(int start_num, int end_num) {
+    public Prime1(int start_num, int end_num) {
         start = start_num;
         end = end_num;
     }
