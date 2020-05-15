@@ -22,10 +22,10 @@ class ParkingGarage {
     }
 }
 
-class Car extends Thread {
+class Car_ extends Thread {
     private ParkingGarage parkingGarage;
 
-    public Car(String name, ParkingGarage p) {
+    public Car_(String name, ParkingGarage p) {
         super(name);
         this.parkingGarage = p;
         start();
@@ -52,7 +52,7 @@ public class ParkingGarageOperation {
     public static void main(String[] args) {
         ParkingGarage parkingGarage = new ParkingGarage(10);
         for (int i=1; i<=40; i++){
-            Car c = new Car("Car " +i, parkingGarage);
+            Car_ c = new Car_("Car " +i, parkingGarage);
         }
     }
 }
