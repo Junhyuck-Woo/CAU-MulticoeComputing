@@ -1,64 +1,83 @@
+// Writer: Junhyuck Woo
+// Lecture: Multicore Computing
+// Organization: Chung-Ang University
+// Deadline: May 17, 2020
+// Project #2
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class ParkingGarageSimulation {
     public static void main(String[] args) {
-        Garage garage = new Garage(40);
-        for (int i=1; i<=40; i++){
-            Car c = new Car("Car " +i, garage);
+        BlockingQueue places = new ArrayBlockingQueue<String>(1);
+        Garage garage = new Garage(places);
+
+        for (int i=1; i<=10; i++){
+            Car c = new Car("Car " +i, places);
         }
     }
 }
 
-class Garage {
+class Garage extends Thread{
     
-    private int places;
-    
-    Garage(int num_place) {
-        if (num_place < 0) {
-            places = 0;
-        }
-        places = num_place;
+    private BlockingQueue places;
+
+    Garage(BlockingQueue places) {
+        this.places = places;
+        start();
     }
 
-    public synchronized void enter() { // enter parking garage
-        while (places == 0) {
+    public synchronized void leave() {
+        String car_num;
+        try {
+            //car_num = (String)this.places.element();
+            System.out.println(this.places.take() + ": left");
+        }
+        catch (InterruptedException e) {}
+    }
+
+    public void run() { // enter parking garage
+        while (true) {
             try {
-                wait();;
+                if (this.places.size() != 0) {
+                    sleep((int)Math.random()*10000);
+                    leave();
+                }
             }
             catch (InterruptedException e) {}
         }
-        places--;
-    }
-    public synchronized void leave() { // leave parking garage
-        places++;
-        notify();
     }
 }
 
 
 class Car extends Thread {
-    private Garage garage;
+    private BlockingQueue places;
 
-    public Car(String name, Garage p) {
+    public Car(String name, BlockingQueue places) {
         super(name);
-        this.garage = p;
+        this.places = places;
         start();
     }
+
+    public synchronized void enter() {
+        String car_num = getName();
+        System.out.println(car_num + ": trying to enter");
+        try {
+            this.places.put(car_num);
+            System.out.println(car_num + ": entered");
+        }
+        catch (InterruptedException e) {}
+    }
+
     public void run() {
         while (true) {
             try {
-                sleep((int)Math.random()*10000); // derive before parking
+                if (!this.places.contains(getName())){
+                    sleep((int)Math.random()*10000);
+                    enter();
+                }
             }
             catch (InterruptedException e) {}
-            garage.enter();
-            System.out.println(getName() + ": entered");
-            try {
-                sleep((int)Math.random()*10000); // stay within the parking garage
-            }
-            catch (InterruptedException e) {}
-            garage.leave();
-            System.out.println(getName() +": left");
         }
     }
 }
