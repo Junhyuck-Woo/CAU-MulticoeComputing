@@ -10,7 +10,7 @@ import java.awt.desktop.SystemEventListener;
 class pc_dynamic {
     // Given Variables
     private static final int NUM_END = 200000;
-    private static final int NUM_THREAD = 1;
+    private static final int NUM_THREAD = 16;
 
     // Main Method
     public static void main(String[] args) {
