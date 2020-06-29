@@ -3,7 +3,7 @@ Spring 2020, School of Computer Science and Engineering, College of Software, Ch
 Instructor: Bongsoo Sohn
 
 Project List <br>
-1. 
+1. <br>
   prob1: prime counter using static load balancing and dynamic load balancing<br>
   prob2: parallel matrix multiplication that uses multi-threades
 
